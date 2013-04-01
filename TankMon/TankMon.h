@@ -1,0 +1,14 @@
+static void Uart_Init(void);
+static int Uart_PutChar(char, FILE*);
+uint8_t DSReset (void);
+uint8_t DSReadRom (void);
+uint8_t DSReadScratchPad (void);
+void PutByte (uint8_t);
+void PutBit (uint8_t);
+uint8_t GetByte (void);
+uint8_t GetBit (void);
+void InitError (uint8_t);
+uint8_t SendError (uint8_t);
+void SendPacket (char*, uint8_t);
+void SendReadings (void);
+char* CopyDataStr (char*, char*, uint8_t);
