@@ -33,7 +33,7 @@
   <documentation help="" />
   <offline-documentation help="" />
   <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.3.0" />
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.6.0" />
   </dependencies>
 </framework-data>
     </AsfFrameworkConfig>
