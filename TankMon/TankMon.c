@@ -566,6 +566,7 @@ void SendReadings ()
 int main (void)
 {
 	uint16_t i;
+	uint8_t j;
 	uint16_t min;
 	uint16_t max;
 	
@@ -657,32 +658,35 @@ int main (void)
 			// Get the pressure reading
 			_delay_ms (100); // Make sure the pressure sensor is warmed up
 			accumulator = 0;
+			min = 65535;
+			max = 0;
 			ADMUX = _BV(REFS0); // Select channel 0 and vcc ref
 			ADCSRA |= _BV(ADIE); // Enable the ADC interrupt
 			set_sleep_mode (SLEEP_MODE_ADC);
 
-			for (samples = 0; samples < 256; samples++)
+			for (j = 0; j < 4; j++)
 			{
-				sleep_mode ();
+				for (samples = 0; samples < 256; samples++)
+				{
+					sleep_mode ();
+				}
+			
+				for (i = 0; i < 256; i++)
+				{
+					if (reading[i] < min)
+					{
+						min = reading[i];
+					}
+					if (reading[i] > max)
+					{
+						max = reading[i];
+					}
+				}
 			}
 			
 			PORTD &= ~_BV(SWVCC); // turn analog power off
 			ADCSRA &= ~_BV(ADIE); // Disable ADC interrupt
 
-			min = 65535;
-			max = 0;
-			for (i = 0; i < 512; i++)
-			{
-				if (reading[i] < min)
-				{
-					min = reading[i];
-				}
-				if (reading[i] > max)
-				{
-					max = reading[i];
-				}
-			}
-			
 			if (max-min >= 10) // bad reading so store 0xFFFF
 			{
 				strbuf[13] = 0xFF;// Store the high byte
@@ -690,14 +694,14 @@ int main (void)
 			}
 			else
 			{
-				if (accumulator & 16)
+				if (accumulator & 32)
 				{
-					accumulator >>= 5;
+					accumulator >>= 6;
 					accumulator++;
 				}
 				else
 				{
-					accumulator >>= 5;
+					accumulator >>= 6;
 				}
 				strbuf[13] = accumulator >> 8;// Store the high byte
 				strbuf[14] = accumulator & 0xFF; // Store the low byte
