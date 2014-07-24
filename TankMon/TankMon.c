@@ -671,7 +671,7 @@ int main (void)
 
 			min = 65535;
 			max = 0;
-			for (i = 0; i < 256; i++)
+			for (i = 0; i < 512; i++)
 			{
 				if (reading[i] < min)
 				{
@@ -690,14 +690,14 @@ int main (void)
 			}
 			else
 			{
-				if (accumulator & 8)
+				if (accumulator & 16)
 				{
-					accumulator >>= 4;
+					accumulator >>= 5;
 					accumulator++;
 				}
 				else
 				{
-					accumulator >>= 4;
+					accumulator >>= 5;
 				}
 				strbuf[13] = accumulator >> 8;// Store the high byte
 				strbuf[14] = accumulator & 0xFF; // Store the low byte
