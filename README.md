@@ -4,4 +4,4 @@ A water tank level sensor based on a differential pressure sensor. The device is
 
 ## Schematic
 
-![Schematic](https://raw.githubusercontent.com/Makin-Things/Tankmon/master/Doc/schematic.png)
+![Schematic](https://raw.githubusercontent.com/Makin-Things/TankMon/master/Doc/Schematic.png)
